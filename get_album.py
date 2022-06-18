@@ -32,6 +32,16 @@ def get_photos():
         yield item['author'], item['likes'], item['meme_url']
 
 
+def save():
+    res = '{"memes": ['
+    for item in get_photos_info():
+        res += str(item).replace("'", '"') + ',\n'
+    res = res[:len(res)-2:]
+    res += ']}'
+    with open('vezdekod.json', 'w') as vezde:
+        vezde.write(res)
+
+
 if __name__ == "__main__":
-    for i in get_photos():
-        print(i)
+    # save()
+    print(get_photos())
