@@ -25,6 +25,7 @@ for i in range(len(vezdekod_memes)):
 
 special_meme = random.choice(vezdekod_memes)
 
+
 def main():
     no_special_count = 0
     urls = [like_url, skip_url]
