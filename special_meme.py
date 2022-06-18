@@ -7,6 +7,9 @@ import requests
 
 from like_or_skip import like_url, skip_url
 
+TOKEN = os.getenv('TOKEN')
+
+
 @dataclasses.dataclass
 class Meme:
     author: str
@@ -16,27 +19,27 @@ class Meme:
     meme_id: int
 
 
-with open('vezdekod.json') as vezde:
-    vezdekod_memes = json.load(vezde)['memes']
+with open('memes.json') as memes:
+    all_memes = json.load(memes)['memes']
 
-for i in range(len(vezdekod_memes)):
-    vezdekod_memes[i] = Meme(vezdekod_memes[i]['author'], vezdekod_memes[i]['group_id'], vezdekod_memes[i]['likes'],
-                             vezdekod_memes[i]['meme_url'], vezdekod_memes[i]['meme_id'])
+for i in range(len(all_memes)):
+    all_memes[i] = Meme(all_memes[i]['author'], all_memes[i]['group_id'], all_memes[i]['likes'],
+                        all_memes[i]['meme_url'], all_memes[i]['meme_id'])
 
-special_meme = random.choice(vezdekod_memes)
+special_meme = random.choice(all_memes)
 
 
 def main():
     no_special_count = 0
     urls = [like_url, skip_url]
     while True:
-        meme = random.choice(vezdekod_memes)
-        if no_special_count == len(vezdekod_memes)//3:
+        meme = random.choice(all_memes)
+        if no_special_count == len(all_memes)//3:
             meme = special_meme
         if meme != special_meme:
             if meme.likes >= special_meme.likes:
                 if not random.choice((True, False, False)):
-                    meme = random.choice(vezdekod_memes)
+                    meme = random.choice(all_memes)
                     no_special_count += 1
             no_special_count += 1
         print("Meme author: ", meme.author)
